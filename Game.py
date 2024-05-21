@@ -1,6 +1,7 @@
 from WordList import *
 from keyboard import add_hotkey
 from pyautogui import press, typewrite
+from random import uniform
 
 
 class Game:
@@ -36,7 +37,9 @@ class Game:
         try:
             press("backspace")
             word = list(self.out_words[num])
-            typewrite(word, 0.05)
+            for letter in word:
+                typewrite(letter, uniform(0.001, 0.005))
+
             self.used_words.add("".join(self.out_words[num]))
             press("enter")
 

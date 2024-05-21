@@ -1,7 +1,7 @@
 from enum import Enum
 
 class Lang(Enum):
-    GERMAN = "german-variants.dic"
+    GERMAN = "german.txt"
     GERMAN_POKEMON = "german-pokemon.txt"
 
 

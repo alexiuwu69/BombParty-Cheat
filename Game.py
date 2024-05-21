@@ -1,20 +1,44 @@
 from WordList import *
-from pyperclip import copy
+from keyboard import add_hotkey
+from pyautogui import press, typewrite
+
 
 class Game:
     def __init__(self, lang: Lang, amount: int = 5):
-        self.words = WordList(Lang.GERMAN.value, amount)
+        self.amount = amount
+        self.words = WordList(lang, amount)
+        self.out_words = []
+        self.used_words = set()
+        self.setup_kb()
         self.listen()
+
 
     def listen(self):
         while True:
             inp = input()
-            out_words = self.words.find_words(inp)
-            copy(out_words[0])
-            print(f"|{"- "*10}-|")
-
-            for word in out_words:
-                print(word)
+            self.out_words.clear()
+            self.out_words = list(self.words.find_words(inp, self.used_words))
 
             print(f"|{"- "*10}-|")
-            print()
+
+            for index, word in enumerate(self.out_words):
+                print(f"{index + 1} - {word}")
+
+            print(f"|{"- "*10}-|\n")
+
+
+    def setup_kb(self):
+        for num in range(self.amount):
+            add_hotkey(f"{(num+1)}"[-1], lambda num = num: self.kb_cmd(num)) # if num == 9 num +1 = 10 using [-1] 0 will be the hotkey
+
+
+    def kb_cmd(self, num: int):
+        try:
+            press("backspace")
+            word = list(self.out_words[num])
+            typewrite(word, 0.05)
+            self.used_words.add("".join(self.out_words[num]))
+            press("enter")
+
+        except:
+            pass

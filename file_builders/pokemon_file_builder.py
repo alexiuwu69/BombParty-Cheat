@@ -1,8 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
-import string as s
+from string import ascii_lowercase
 
-allowed_letters = set(s.ascii_letters).union(set("äöü-ÄÖÜ0123456789ßé:"))
+allowed_letters = set(ascii_lowercase).union(set("äöü-0123456789ßé:"))
 
 
 if __name__ == "__main__":
@@ -17,7 +17,7 @@ if __name__ == "__main__":
         for i, line in enumerate(text):
             if line.strip().isnumeric():
                 name = []
-                for letter in text[i+1]:
+                for letter in text[i+1].lower():  # using lowercase so it's better
                     if letter in allowed_letters: # filtering for certain characters
                         name += letter
                 

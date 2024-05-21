@@ -24,4 +24,4 @@ class WordList:
             if splice in word and word not in used_words:
                 found_words.append(word)
 
-        return found_words
+        return set(found_words) # removing potential dublicates

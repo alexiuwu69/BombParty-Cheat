@@ -16,12 +16,12 @@ class WordList:
 
 
     def find_words(self, splice: str, used_words) -> set:
-        found_words = []
+        found_words = set()
         for word in self.words:
             if len(found_words) == self.amount:
                 break
 
             if splice in word and word not in used_words:
-                found_words.append(word)
+                found_words.add(word)
 
-        return set(found_words) # removing potential dublicates
+        return found_words
